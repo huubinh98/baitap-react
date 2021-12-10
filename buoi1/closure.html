@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Closure CFD</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100vh;
+            gap: 30px;
+            background-color: #000;
+        }
+
+        .count1,
+        .count2 {
+            border: 2px solid grey;
+            border-radius: 5px;
+            width: 200px;
+            height: 100px;
+            text-align: center;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .num {
+            font-size: 40px;
+            color: white;
+        }
+
+        button {
+            padding: 3px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="countdown">
+        <div class="count1">
+            <div class="num">00</div>
+            <div class="btn">
+                <button class="play">Play</button>
+                <button class="pause">Pause</button>
+                <button class="reset">Reset</button>
+            </div>
+        </div>
+        <div class="count2">
+            <div class="num">00</div>
+            <div class="btn">
+                <button class="play">Play</button>
+                <button class="pause">Pause</button>
+                <button class="reset">Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const countdown = (element, intNum) => {
+            let num = intNum;
+            let timer;
+            const objEvent = {
+                play: () => {
+                    clearInterval(timer)
+                    timer = setInterval(() => {
+                        --num
+                        if (num === 0) {
+                            clearInterval(timer)
+                            // objEvent.reset();
+                        }
+                        element.innerText = num
+                    }, 1000)
+                },
+                pause: () => {
+                    clearInterval(timer);
+                },
+                reset: () => {
+                    num = intNum;
+                    objEvent.play();
+                }
+            }
+            return objEvent
+        }
+
+        const countdown1 = countdown(document.querySelector('.count1 .num'), 10)
+        document.querySelector('.count1 .btn .play').addEventListener('click', countdown1.play);
+        document.querySelector('.count1 .btn .pause').addEventListener('click', countdown1.pause);
+        document.querySelector('.count1 .btn .reset').addEventListener('click', countdown1.reset);
+
+        const countdown2 = countdown(document.querySelector('.count2 .num'), 100)
+        document.querySelector('.count2 .btn .play').addEventListener('click', countdown2.play);
+        document.querySelector('.count2 .btn .pause').addEventListener('click', countdown2.pause);
+        document.querySelector('.count2 .btn .reset').addEventListener('click', countdown2.reset);
+
+        // const count2 = countdown(document.querySelector('.count2'), 100);
+
+    </script>
+</body>
+
+</html>
